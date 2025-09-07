@@ -4,5 +4,4 @@ def test_index():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert b"Hello" in response.data
-
+    assert b"My To-Do List" in response.data  # updated assertion
