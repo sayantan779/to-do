@@ -1,3 +1,4 @@
+# app/routes.py
 from flask import Flask, render_template, request, redirect, url_for
 from app.models import todos
 
@@ -11,6 +12,7 @@ def index():
 def add():
     task = request.form.get("task")
     if task:
+        # Each task is now a dict with 'task' and 'completed' status
         todos.append({"task": task, "completed": False})
     return redirect(url_for("index"))
 
@@ -20,7 +22,6 @@ def delete(task_id):
         todos.pop(task_id)
     return redirect(url_for("index"))
 
-# New route to toggle completion
 @app.route("/toggle/<int:task_id>")
 def toggle(task_id):
     if 0 <= task_id < len(todos):
