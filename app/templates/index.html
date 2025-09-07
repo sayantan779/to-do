@@ -1,20 +1,15 @@
-<!doctype html>
-<html>
-<head>
-  <title>To-Do App</title>
-</head>
-<body>
-  <h1>My To-Do List</h1>
-
-  <form action="/add" method="POST">
-    <input type="text" name="task" placeholder="New Task" required>
-    <button type="submit">Add</button>
-  </form>
-
-  <ul>
-    {% for task in todos %}
-      <li>{{ task }} <a href="{{ url_for('delete', task_id=loop.index0) }}">❌</a></li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+<ul>
+  {% for todo in todos %}
+    <li>
+      <form style="display:inline;" action="{{ url_for('toggle', task_id=loop.index0) }}">
+        <button type="submit">
+          {% if todo.completed %}✔{% else %}❌{% endif %}
+        </button>
+      </form>
+      <span style="text-decoration: {% if todo.completed %}line-through{% else %}none{% endif %};">
+        {{ todo.task }}
+      </span>
+      <a href="{{ url_for('delete', task_id=loop.index0) }}">Delete</a>
+    </li>
+  {% endfor %}
+</ul>

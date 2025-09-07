@@ -1,3 +1,5 @@
 # app/models.py
-
-todos = []  # simple list to hold tasks
+todos = [
+    {"task": "Buy groceries", "completed": False},
+    {"task": "Learn Flask", "completed": False},
+]
