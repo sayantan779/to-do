@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+.venv/
+venv/
+*.sqlite3
+.DS_Store
+.idea/
+.vscode/
+
+# Docker
+*.log
+*.pid
+*.seed
+*.pid.lock
+
