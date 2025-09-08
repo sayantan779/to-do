@@ -60,9 +60,10 @@ Frontend:
 
 cd ../frontend
 npm install
-
+```
 ### Docker Build & Deployment
 
+```
 Set environment variables
 
 export AWS_REGION=<your-aws-region>
@@ -78,9 +79,9 @@ Push to AWS ECR
 
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 docker push $IMAGE_URI
-
+```
 ### CI/CD
-
+```
     GitHub Actions automates the Docker build and ECR push process.
 
     Workflow triggers on every push to main branch.
@@ -96,9 +97,9 @@ docker push $IMAGE_URI
         Authenticate to AWS ECR
 
         Push Docker images to ECR
-
+```
 ### Contributing
-
+```
     Fork the repository
 
     Create a new branch: git checkout -b feature-name
@@ -110,3 +111,4 @@ docker push $IMAGE_URI
     Push to the branch: git push origin feature-name
 
     Open a Pull Request
+```
