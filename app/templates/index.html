@@ -11,7 +11,7 @@
     <h1 class="text-2xl font-bold mb-4 text-center">My To-Do List</h1>
 
     <!-- Add Task Form -->
-    <form action="{{ url_for('add') }}" method="POST" class="flex mb-4">
+    <form action="{{ url_for('main.add') }}" method="POST" class="flex mb-4">
       <input type="text" name="task" placeholder="Enter new task..."
              class="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
       <button type="submit"
@@ -22,28 +22,23 @@
 
     <!-- Tasks List -->
     <ul class="space-y-2">
-      {% for idx, todo in todos %}
-        <li class="flex items-center justify-between bg-gray-50 p-2 rounded-lg">
-          <span class="{% if todo.done %}line-through text-gray-500{% endif %}">
-            {{ todo.task }}
-          </span>
-          <div class="flex space-x-2">
-            <!-- Toggle Status -->
-            <a href="{{ url_for('toggle', task_id=idx) }}"
-               class="px-2 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600">
-              Toggle
-            </a>
-            <!-- Delete Task -->
-            <a href="{{ url_for('delete', task_id=idx) }}"
-               class="px-2 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">
-              Delete
-            </a>
-          </div>
-        </li>
-      {% else %}
-        <li class="text-gray-500 text-center">No tasks yet. Add one above!</li>
-      {% endfor %}
-    </ul>
+  {% for i, todo in todos %}
+    <li class="flex items-center justify-between bg-gray-100 p-2 rounded">
+      <div class="flex items-center space-x-2">
+        <!-- Toggle link -->
+        <a href="{{ url_for('main.toggle', task_id=i) }}" class="text-blue-500">[Toggle]</a>
+
+        <!-- Task text with conditional strike-through -->
+        <span class="{% if todo.status == 'completed' %}line-through text-gray-500{% endif %}">
+          {{ todo.task }}
+        </span>
+      </div>
+
+      <!-- Delete button -->
+      <a href="{{ url_for('main.delete', task_id=i) }}" class="text-red-500">[Delete]</a>
+    </li>
+  {% endfor %}
+</ul>
   </div>
 
 </body>

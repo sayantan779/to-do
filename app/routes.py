@@ -1,28 +1,41 @@
-# app/routes.py
-from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import todos
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
-bp = Blueprint("main", __name__)
+main = Blueprint("main", __name__)
 
-@bp.route("/")
+@main.before_app_request
+def make_session_permanent():
+    # Ensure todos exists in session
+    if "todos" not in session:
+        session["todos"] = []
+
+@main.route("/")
 def index():
-    return render_template("index.html", todos=enumerate(todos))
+    return render_template("index.html", todos=enumerate(session["todos"]))
 
-@bp.route("/add", methods=["POST"])
+@main.route("/add", methods=["POST"])
 def add():
     task = request.form.get("task")
     if task:
-        todos.append({"task": task, "done": False})
+        todos = session["todos"]
+        todos.append({"task": task, "status": "pending"})
+        session["todos"] = todos  # reassign to persist changes
     return redirect(url_for("main.index"))
 
-@bp.route("/toggle/<int:task_id>")
+@main.route("/toggle/<int:task_id>")
 def toggle(task_id):
+    todos = session["todos"]
     if 0 <= task_id < len(todos):
-        todos[task_id]["done"] = not todos[task_id]["done"]
+        if todos[task_id]["status"] == "completed":
+            todos[task_id]["status"] = "pending"
+        else:
+            todos[task_id]["status"] = "completed"
+        session["todos"] = todos
     return redirect(url_for("main.index"))
 
-@bp.route("/delete/<int:task_id>")
+@main.route("/delete/<int:task_id>")
 def delete(task_id):
+    todos = session["todos"]
     if 0 <= task_id < len(todos):
         todos.pop(task_id)
+        session["todos"] = todos
     return redirect(url_for("main.index"))
