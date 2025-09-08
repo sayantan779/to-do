@@ -82,33 +82,33 @@ docker push $IMAGE_URI
 ```
 ### CI/CD
 ```
-    GitHub Actions automates the Docker build and ECR push process.
+GitHub Actions automates the Docker build and ECR push process.
 
-    Workflow triggers on every push to main branch.
+Workflow triggers on every push to main branch.
 
-    Steps:
+Steps:
 
-        Checkout code
+    Checkout code
 
-        Set up Node.js environment
+    Set up Node.js environment
 
-        Build Docker images
+    Build Docker images
 
-        Authenticate to AWS ECR
+    Authenticate to AWS ECR
 
-        Push Docker images to ECR
+    Push Docker images to ECR
 ```
 ### Contributing
 ```
-    Fork the repository
+Fork the repository
 
-    Create a new branch: git checkout -b feature-name
+Create a new branch: git checkout -b feature-name
 
-    Make your changes
+Make your changes
 
-    Commit your changes: git commit -m "Add some feature"
+Commit your changes: git commit -m "Add some feature"
 
-    Push to the branch: git push origin feature-name
+Push to the branch: git push origin feature-name
 
-    Open a Pull Request
+Open a Pull Request
 ```
