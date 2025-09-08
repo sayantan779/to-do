@@ -53,6 +53,6 @@ jobs:
 
       - name: Build, Tag, and Push Docker Image
         run: |
-          IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/todo-app:latest
+          IMAGE_URI= ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/todo-app:latest
           docker build -t $IMAGE_URI .
           docker push $IMAGE_URI
