@@ -1,6 +1,10 @@
 from flask import Flask
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.secret_key = "supersecretkey"  # required for session storage
 
-from app import routes
+    from .routes import main
+    app.register_blueprint(main)
 
+    return app

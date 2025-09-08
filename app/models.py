@@ -1,3 +1,6 @@
 # app/models.py
 
-todos = []  # simple list to hold tasks
+# Each todo is a dict: {"task": str, "status": "Pending"|"Started"|"Completed"}
+todos = [
+   
+]
