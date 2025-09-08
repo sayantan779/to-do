@@ -1,5 +1,6 @@
 # app/models.py
+
+# Each todo is a dict: {"task": str, "status": "Pending"|"Started"|"Completed"}
 todos = [
-    {"task": "Buy groceries", "completed": False},
-    {"task": "Learn Flask", "completed": False},
+   
 ]

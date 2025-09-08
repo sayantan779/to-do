@@ -11,5 +11,5 @@ ENV FLASK_APP=app.routes
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
 
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0", "--reload", "--debug"]
 
