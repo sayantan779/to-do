@@ -1,7 +1,11 @@
 # app/__init__.py
 from flask import Flask
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
-# import routes so blueprint registers
-from app import routes  # noqa: E402,F401
+    # Import routes inside the function to avoid circular imports
+    from app import routes
+    app.register_blueprint(routes.bp)
+
+    return app
