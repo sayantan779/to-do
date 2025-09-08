@@ -27,18 +27,17 @@ This project is a Todo application consisting of **frontend** and **backend** se
 
 ## Tech Stack
 
-- **Frontend:** React / Vue / Angular (based on your actual frontend)
-- **Backend:** Node.js / Express
-- **Database:** MongoDB / PostgreSQL (as per your backend)
+- **Backend:** Python, Flask
+- **Frontend:** HTML, Tailwind CSS
 - **Containerization:** Docker
 - **Cloud Deployment:** AWS ECR
-- **CI/CD:** GitHub Actions (or your pipeline)
+- **CI/CD:** GitHub Actions 
 
 ## Setup
 
 ### Prerequisites
 
-- Node.js >= 16
+- Python >= 3.10
 - Docker >= 20
 - AWS CLI configured
 - Git
@@ -46,20 +45,14 @@ This project is a Todo application consisting of **frontend** and **backend** se
 ### Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd todo-app
+git clone https://github.com/sayantan779/to-do.git
+cd to-do
 
 Install dependencies
 
 Backend:
 
-cd backend
-npm install
-
-Frontend:
-
-cd ../frontend
-npm install
+pip install -r requirements.txt
 ```
 ### Docker Build & Deployment
 
@@ -72,8 +65,7 @@ export IMAGE_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/todo-app:late
 
 Build Docker images
 
-docker build -t $IMAGE_URI ./backend
-docker build -t $IMAGE_URI ./frontend
+docker build -t $IMAGE_URI .
 
 Push to AWS ECR
 
@@ -90,7 +82,7 @@ Steps:
 
     Checkout code
 
-    Set up Node.js environment
+    Set up Python environment
 
     Build Docker images
 
