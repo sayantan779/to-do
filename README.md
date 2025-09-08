@@ -11,7 +11,7 @@ A cloud-native Todo application built with Docker and deployed to AWS ECR. This 
 - [Docker Build & Deployment](#docker-build--deployment)
 - [CI/CD](#cicd)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Project Overview
 
@@ -61,7 +61,8 @@ Frontend:
 cd ../frontend
 npm install
 
-Docker Build & Deployment
+### Docker Build & Deployment
+
 Set environment variables
 
 export AWS_REGION=<your-aws-region>
@@ -78,7 +79,7 @@ Push to AWS ECR
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 docker push $IMAGE_URI
 
-CI/CD
+### CI/CD
 
     GitHub Actions automates the Docker build and ECR push process.
 
@@ -96,7 +97,7 @@ CI/CD
 
         Push Docker images to ECR
 
-Contributing
+### Contributing
 
     Fork the repository
 
