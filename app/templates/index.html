@@ -1,106 +1,50 @@
-<!-- app/templates/index.html -->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>To-Do</title>
-  <!-- Tailwind CDN (quick dev setup) -->
+  <meta charset="utf-8">
+  <title>To-Do App</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-start justify-center p-6">
-  <div class="w-full max-w-3xl">
-    <!-- Header -->
-    <header class="text-center mb-6">
-      <h1 class="text-4xl font-bold text-slate-800 py-4">TO-DO</h1>
-    </header>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen">
 
-    <!-- Add Task -->
-    <section class="mb-6">
-      <form action="{{ url_for('add') }}" method="POST" class="flex gap-3">
-        <label for="task" class="sr-only">Add your task</label>
-        <input id="task" name="task" type="text" required
-               class="flex-1 px-4 py-3 rounded-lg border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400"
-               placeholder="Add your task here..." />
-        <button type="submit"
-                class="px-5 py-3 bg-sky-600 text-white font-medium rounded-lg hover:bg-sky-700 transition">
-          ADD
-        </button>
-      </form>
-    </section>
+  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">My To-Do List</h1>
 
-    <!-- List container -->
-    <section class="bg-white rounded-lg shadow border border-slate-200 p-4">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-lg font-semibold text-slate-700">List of Tasks</h2>
-        <span class="text-sm text-slate-500">Status</span>
-      </div>
+    <!-- Add Task Form -->
+    <form action="{{ url_for('add') }}" method="POST" class="flex mb-4">
+      <input type="text" name="task" placeholder="Enter new task..."
+             class="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">
+        Add
+      </button>
+    </form>
 
-      <ol class="space-y-3">
-        {% if todos|length == 0 %}
-          <p class="text-sm text-slate-500">No tasks yet. Add one above!</p>
-        {% endif %}
-
-        {% for todo in todos %}
-        <li class="flex items-center justify-between gap-4 p-3 rounded-md border border-slate-100">
-          <div class="flex items-center gap-4 min-w-0">
-            <div class="text-slate-500 w-6 text-right">{{ loop.index }}).</div>
-            <div class="min-w-0">
-              {% if todo.status == "Completed" %}
-                <div class="text-slate-700 line-through break-words">{{ todo.task }}</div>
-              {% else %}
-                <div class="text-slate-800 break-words">{{ todo.task }}</div>
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- status radios + delete -->
-          <div class="flex items-center gap-4">
-            <!-- status form -->
-            <form action="{{ url_for('update_status', task_id=loop.index0) }}" method="POST" class="flex items-center gap-2">
-              <label class="text-xs text-slate-500 mr-2 hidden md:inline">Status</label>
-              <div class="flex items-center space-x-2 text-sm">
-                <label class="inline-flex items-center gap-1">
-                  <input type="radio" name="status" value="Started"
-                         {% if todo.status == "Started" %}checked{% endif %}
-                         onchange="this.form.submit()"
-                         class="h-4 w-4 text-amber-500" />
-                  <span class="hidden sm:inline">Started</span>
-                </label>
-                <label class="inline-flex items-center gap-1">
-                  <input type="radio" name="status" value="Pending"
-                         {% if todo.status == "Pending" %}checked{% endif %}
-                         onchange="this.form.submit()"
-                         class="h-4 w-4 text-sky-500" />
-                  <span class="hidden sm:inline">Pending</span>
-                </label>
-                <label class="inline-flex items-center gap-1">
-                  <input type="radio" name="status" value="Completed"
-                         {% if todo.status == "Completed" %}checked{% endif %}
-                         onchange="this.form.submit()"
-                         class="h-4 w-4 text-green-600" />
-                  <span class="hidden sm:inline">Completed</span>
-                </label>
-              </div>
-            </form>
-
-            <!-- Delete form (POST) -->
-            <form action="{{ url_for('delete', task_id=loop.index0) }}" method="POST">
-              <button type="submit"
-                      class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
-                Delete
-              </button>
-            </form>
+    <!-- Tasks List -->
+    <ul class="space-y-2">
+      {% for idx, todo in todos %}
+        <li class="flex items-center justify-between bg-gray-50 p-2 rounded-lg">
+          <span class="{% if todo.done %}line-through text-gray-500{% endif %}">
+            {{ todo.task }}
+          </span>
+          <div class="flex space-x-2">
+            <!-- Toggle Status -->
+            <a href="{{ url_for('toggle', task_id=idx) }}"
+               class="px-2 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600">
+              Toggle
+            </a>
+            <!-- Delete Task -->
+            <a href="{{ url_for('delete', task_id=idx) }}"
+               class="px-2 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">
+              Delete
+            </a>
           </div>
         </li>
-        {% endfor %}
-      </ol>
-    </section>
+      {% else %}
+        <li class="text-gray-500 text-center">No tasks yet. Add one above!</li>
+      {% endfor %}
+    </ul>
   </div>
 
-  <!-- small script to avoid double submit if JS is enabled (optional) -->
-  <script>
-    // No-op; forms submit on radio click via onchange.
-  </script>
 </body>
 </html>
